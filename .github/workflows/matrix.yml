@@ -1,0 +1,43 @@
+name: Test Rusable Matrix Workflow
+on:
+  workflow_call:
+    inputs:
+      matrix_flavor:
+        required: true
+        type: string
+        default: '[ "development", "production" ]'
+        description: "Environment flavor."
+      matrix_type:
+        required: true
+        type: string
+        default: '[ "matrix", "matrix-qa" ]'
+        description: "List of extension channels to build."
+      node_version:
+        required: true
+        type: string
+        default: '1.1.1'
+      use_workload_identity:
+        required: false
+        type: boolean
+        default: true 
+      workload_identity_pool:
+        required: false
+        type: string
+        default: 'gcp-workload-identity-pool'
+      workload_sa_email:
+        required: false
+        type: string
+        default: 'gcp@serviceaccount.com'
+
+jobs:
+  verify-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Inputs
+        run: |
+          echo "Matrix Flavor: ${{ fromJSON(inputs.matrix_flavor) }}"
+          echo "Matrix Type: ${{ fromJSON(inputs.matrix_type) }}"
+          echo "Node Version: ${{ inputs.node_version }}"
+          echo "Use Workload Identity: ${{ inputs.use_workload_identity }}"
+          echo "Workload Identity Pool: ${{ inputs.workload_identity_pool }}"
+          echo "Workload Service Account Email: ${{ inputs.workload_sa_email }}"
