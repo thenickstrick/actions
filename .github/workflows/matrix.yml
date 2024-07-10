@@ -32,11 +32,15 @@ on:
 jobs:
   verify-inputs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        type: ${{ toJSON(inputs.matrix_type) }}
+        environment: ${{ toJSON(inputs.matrix_flavor) }}
     steps:
       - name: Print Inputs
         run: |
-          echo "Matrix Flavor: ${{ toJSON(inputs.matrix_flavor) }}"
-          echo "Matrix Type: ${{ toJSON(inputs.matrix_type) }}"
+          echo "Matrix Flavor: ${{ matrix_flavor }}"
+          echo "Matrix Type: ${{ matrix_type }}"
           echo "Node Version: ${{ inputs.node_version }}"
           echo "Use Workload Identity: ${{ inputs.use_workload_identity }}"
           echo "Workload Identity Pool: ${{ inputs.workload_identity_pool }}"
