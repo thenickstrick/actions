@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        type: ${{ tfromJSON(inputs.matrix_type) }}
+        type: ${{ fromJSON(inputs.matrix_type) }}
         environment: ${{ fromJSON(inputs.matrix_flavor) }}
     steps:
       - name: Print Inputs
